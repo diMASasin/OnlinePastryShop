@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cake', function (Blueprint $table) {
+        Schema::create('cakes', function (Blueprint $table) {
             $table->id();
             $table->string("name");
+            $table->integer('id_category');
             $table->integer('weight');
             $table->integer('price');
-            $table->text('descriptions');
-            $table->integer('id_category');
+            $table->text('description');
             $table->integer('id_filling');
             $table->integer('id_type');
-            $table->foreign('id_category')->references('id')->on('category');
-            $table->foreign('id_filling')->references('id')->on('filling');
-            $table->foreign('id_type')->references('id')->on('type');
+            $table->foreign('id_category')->references('id')->on('categories');
+            $table->foreign('id_filling')->references('id')->on('fillings');
+            $table->foreign('id_type')->references('id')->on('types');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cake');
+        Schema::dropIfExists('cakes');
     }
 };

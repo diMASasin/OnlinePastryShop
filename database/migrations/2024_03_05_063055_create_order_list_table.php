@@ -10,12 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('order_list', function (Blueprint $table) {
-            $table->id();
+        Schema::create('cake_order', function (Blueprint $table) {
             $table->integer('id_order');
             $table->integer('id_cake');
-            $table->foreign('id_order')->references('id')->on('order');
-            $table->foreign('id_cake')->references('id')->on('cake');
+            $table->foreign('id_order')->references('id')->on('orders');
+            $table->foreign('id_cake')->references('id')->on('cakes');
             $table->integer('amount');
             $table->integer('one_cake_price');
             $table->timestamps();
@@ -27,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_list');
+        Schema::dropIfExists('cake_order');
     }
 };
