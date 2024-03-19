@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Cake extends Model
 {
+    protected $fillable = ['name', 'price', 'category_id', 'weight', 'description', 'filling_id', 'type_id'];
     use HasFactory;
     public function category(): BelongsTo
     {

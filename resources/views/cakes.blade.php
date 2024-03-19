@@ -8,24 +8,29 @@
     <title>605-01</title>
 </head>
 <body>
-    <h2>Список товаров</h2>
-    <table border="1">
-        <thead>
-            <td>id</td>
-            <td>Наименование</td>
-            <td>Цена</td>
-            <td>Категория</td>
-        </thead>
-            <tbody>
-                @foreach($cakes as $cake)
-                    <tr>
-                        <td>{{$cake->id}}</td>
-                        <td>{{$cake->name}}</td>
-                        <td>{{$cake->price}}</td>
-                        <td>{{$cake->category->name}}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-    </table>
+<h2>Список товаров</h2>
+<table border="1">
+    <thead>
+    <td>id</td>
+    <td>Наименование</td>
+    <td>Цена</td>
+    <td>Категория</td>
+    <td>Действия</td>
+    </thead>
+    <tbody>
+    @foreach($cakes as $cake)
+        <tr>
+            <td>{{$cake->id}}</td>
+            <td>{{$cake->name}}</td>
+            <td>{{$cake->price}}</td>
+            <td>{{$cake->category->name}}</td>
+            <td>
+                <a href="{{url('cake/destroy/'.$cake->id)}}">Удалить</a>
+                <a href="{{url('cake/edit/'.$cake->id)}}">Редактировать</a>
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
 </body>
 </html>

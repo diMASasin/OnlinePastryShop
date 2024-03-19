@@ -31,3 +31,13 @@ Route::get('/category/{id}', [CategoryController::class, 'show']);
 Route::get('/cakes', [CakeController::class, 'index']);
 
 Route::get('/order/{id}', [OrderController::class, 'show']);
+
+Route::get('/cake/create', [CakeController::class, 'create']);
+
+Route::post('/cake', [CakeController::class, 'store']);
+
+Route::get('/cake/edit/{id}', [CakeController::class, 'edit']);
+
+Route::post('/cake/update/{id}', [CakeController::class, 'update']);
+
+Route::get('/cake/destroy/{id}', [CakeController::class, 'destroy']);
