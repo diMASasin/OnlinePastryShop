@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Cake;
 use App\Models\Category;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Gate;
 
 
 class CakeController extends Controller
 {
-    public  function index(Request $request)
+    public  function index(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $perpage = $request->perpage ?? 2;
         return view('cakes', [
@@ -20,7 +23,7 @@ class CakeController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): Application|Redirector|RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
         $validated = $request->validate([
            'name' => 'required|unique:cakes|max:255',
@@ -36,14 +39,14 @@ class CakeController extends Controller
         return redirect('/cakes');
     }
 
-    public function create()
+    public function create(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('item_create', [
             'categories' => Category::all()
         ]);
     }
 
-    public function edit(string $id)
+    public function edit(string $id): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('item_edit', [
             'cake' => Cake::all()->where('id', $id)->first(),
@@ -78,7 +81,10 @@ class CakeController extends Controller
 
     public function destroy(string $id)
     {
+        if (!Gate::allows('destroy-item', Cake::all()->where('id', $id)->first())) {
+            return redirect(to: '/error')->with('message', 'У вас нет разрешения на удаление товара номер ' . $id);
+        }
         Cake::destroy($id);
-        return redirect('/cakes');
+        return redirect(to: '/item');
     }
 }

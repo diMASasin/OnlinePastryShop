@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CakeController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,3 +42,23 @@ Route::get('/cake/edit/{id}', [CakeController::class, 'edit']);
 Route::post('/cake/update/{id}', [CakeController::class, 'update']);
 
 Route::get('/cake/destroy/{id}', [CakeController::class, 'destroy']);
+
+Route::get('/login', [LoginController::class, 'login']);
+
+Route::get('/logout', [LoginController::class, 'logout']);
+
+Route::post('/auth', [LoginController::class, 'authenticate']);
+
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+
+Route::get('/cake/create', [CakeController::class, 'create'])->middleware('auth');
+
+Route::get('/cake/destroy/{id}', [CakeController::class, 'destroy'])->middleware('auth');
+
+Route::post('/cake/update/{id}', [CakeController::class, 'update'])->middleware('auth');
+
+Route::get('/cake/edit/{id}', [CakeController::class, 'edit'])->middleware('auth');
+
+Route::get('/error', function() {
+    return view('error', ['message' => session('message')]);
+});
