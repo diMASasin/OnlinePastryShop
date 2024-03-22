@@ -12,10 +12,11 @@ use Illuminate\Routing\Redirector;
 
 class CakeController extends Controller
 {
-    public  function index()
+    public  function index(Request $request)
     {
+        $perpage = $request->perpage ?? 2;
         return view('cakes', [
-            'cakes' => Cake::all()
+            'cakes' => Cake::paginate($perpage)->withQueryString()
         ]);
     }
 
